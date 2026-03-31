@@ -1,7 +1,16 @@
+import React from "react";
 import "../global.css";
+import { Stack } from "expo-router";
+import { AuthProvider } from "../context/AuthContext";
 
-import { Slot } from "expo-router";
+export default function RootLayout() {
 
-export default function Layout() {
-  return <Slot />;
+  return (
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(auth)" />
+      </Stack>
+    </AuthProvider>
+  );
 }
