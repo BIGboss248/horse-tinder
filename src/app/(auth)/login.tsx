@@ -22,10 +22,11 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please enter both email and password');
-      return;
-    }
+    // TODO uncomment
+    // if (!email || !password) {
+    //   Alert.alert('Error', 'Please enter both email and password');
+    //   return;
+    // }
 
     setLoading(true);
     try {
