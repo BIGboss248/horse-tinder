@@ -40,13 +40,17 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const [user, setUser] = useState<UserValue | null>(null);
   const router = useRouter();
   const login = async (email: string, password: string) => {
-    // TODO enable this if you can't connect to supabase and need to design the app
-    // setUser({
-    //   name: "Jhon Doe",
-    //   email: "example@gmail.com",
-    //   id: "789456123",
-    // }
-    // )
+    // TODO Remove after testing
+    if (email === password && password === "a") {
+      setUser({
+        name: "Jhon Doe",
+        email: "example@gmail.com",
+        id: "789456123",
+      }
+      )
+      router.replace("/(tabs)/profile")
+      return;
+    }
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,

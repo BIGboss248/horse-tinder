@@ -5,16 +5,18 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'expo-router';
 
 export default function Login() {
   const { login } = useAuth();
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,15 +24,14 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    // TODO uncomment
-    // if (!email || !password) {
-    //   Alert.alert('Error', 'Please enter both email and password');
-    //   return;
-    // }
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
 
     setLoading(true);
     try {
-      login();
+      login(email, password); // assuming login is async
     } catch (error: any) {
       Alert.alert(
         'Login Failed',
@@ -42,179 +43,124 @@ export default function Login() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
+    <SafeAreaView className="flex-1 bg-[#F5EDE0] dark:bg-[#2C1F14]">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1"
       >
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
-        </View>
+        <ScrollView
+          contentContainerClassName="flex-grow justify-center px-6 py-10"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header / Branding */}
+          <View className="items-center mb-12">
+            <View className="bg-white dark:bg-[#3A2A1F] w-24 h-24 rounded-3xl items-center justify-center mb-6 shadow-sm">
+              <Text className="text-5xl">🐎</Text>
+            </View>
 
-        <View style={styles.form}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#999"
-          />
+            <Text className="text-4xl text-center font-bold text-[#2C1F14] dark:text-white tracking-tight">
+              Welcome Back
+            </Text>
+            <Text className="text-[#8B4513] dark:text-amber-400 text-lg mt-2">
+              Sign in to continue to Horse Tinder!
+            </Text>
+          </View>
 
-          <Text style={styles.label}>Password</Text>
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={styles.passwordInput}
-              placeholder="Enter your password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              placeholderTextColor="#999"
-            />
+          {/* Form */}
+          <View className="space-y-6">
+            {/* Email Field */}
+            <View>
+              <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-sm font-semibold mb-2 ml-1">
+                Email
+              </Text>
+              <TextInput
+                className="bg-white dark:bg-[#3A2A1F] border border-[#E5D5B8] dark:border-[#5C4630] rounded-2xl px-5 py-4 text-base text-[#2C1F14] dark:text-white"
+                placeholder="Enter your email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholderTextColor="#9C8A6F"
+
+              />
+            </View>
+
+            {/* Password Field */}
+            <View>
+              <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-sm font-semibold mb-2 ml-1">
+                Password
+              </Text>
+              <View className="bg-white dark:bg-[#3A2A1F] border border-[#E5D5B8] dark:border-[#5C4630] rounded-2xl flex-row items-center px-5">
+                <TextInput
+                  className="flex-1 py-4 text-base text-[#2C1F14] dark:text-white"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!showPassword}
+                  placeholderTextColor="#9C8A6F"
+                />
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}
+                  className="p-2"
+                >
+                  <Text className="text-2xl">
+                    {showPassword ? '🙈' : '👁️'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Forgot Password */}
+            <TouchableOpacity className="self-end mt-1">
+              <Text className="text-amber-600 dark:text-amber-400 font-medium text-sm">
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+
+            {/* Login Button */}
             <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeIcon}
+              className={`mt-4 py-4 rounded-2xl items-center justify-center ${loading
+                ? 'bg-amber-400'
+                : 'bg-amber-600 active:bg-amber-700'
+                }`}
+              onPress={handleLogin}
+              disabled={loading}
             >
-              <Text style={styles.eyeText}>
-                {showPassword ? '🙈' : '👁️'}
+              {loading ? (
+                <ActivityIndicator color="#fff" size="small" />
+              ) : (
+                <Text className="text-white font-semibold text-lg tracking-wide">
+                  Login
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {/* Footer */}
+          <View className="flex-row justify-center mt-12">
+            <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-base">
+              Don't have an account?{' '}
+            </Text>
+            <TouchableOpacity onPress={() => router.replace("/(auth)/signUp")}>
+              <Text className="text-amber-600 dark:text-amber-400 font-semibold text-base">
+                Sign up
               </Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={styles.forgotText}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.loginButton, loading && styles.loginButtonDisabled]}
-            onPress={handleLogin}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.loginButtonText}>Login</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          {/* App Branding at Bottom */}
+          <View className="items-center mt-16 opacity-75">
+            <Text className="text-[#8B4513] dark:text-amber-500 font-bold text-xl tracking-widest">
+              HORSE TINDER 🐎
+            </Text>
+            <Text className="text-xs text-[#8B4513] dark:text-amber-600/70 mt-1">
+              Find your perfect horse match
+            </Text>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  scrollContent: {
-    flexGrow: 1,
-    padding: 24,
-    justifyContent: 'center',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-  },
-  form: {
-    width: '100%',
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 8,
-    marginTop: 16,
-  },
-  input: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 12,
-  },
-  passwordInput: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 16,
-  },
-  eyeIcon: {
-    paddingHorizontal: 16,
-  },
-  eyeText: {
-    fontSize: 20,
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    marginBottom: 24,
-  },
-  forgotText: {
-    color: '#007AFF',
-    fontSize: 14,
-  },
-  loginButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 12,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  loginButtonDisabled: {
-    backgroundColor: '#80bfff',
-  },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 40,
-  },
-  footerText: {
-    color: '#666',
-    fontSize: 15,
-  },
-  signUpText: {
-    color: '#007AFF',
-    fontSize: 15,
-    fontWeight: '600',
-  },
-});
