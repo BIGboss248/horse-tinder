@@ -1,12 +1,12 @@
-import { ColorPicker } from "@expo/ui/swift-ui";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Home() {
 
+  const { logout } = useAuth();
   return (
-    <View style = {styles.container}>
-      {Platform.OS === "ios" && <ColorPicker selection={"#ffffff"} />}
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
+    <View style={styles.container}>
+      <Button title="LogOut" onPress={logout} />
     </View>
   );
 }
