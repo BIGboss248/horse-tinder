@@ -27,7 +27,7 @@ export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: "red", headerShown: false }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{ tabBarIcon: InfoIcon }}
       />
       <Tabs.Screen
