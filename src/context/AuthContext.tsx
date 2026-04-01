@@ -1,6 +1,7 @@
 /* file AuthContext.tsx */
 import { useRouter } from "expo-router";
 import { createContext, ReactNode, useContext, useState } from "react";
+import { supabase } from "../lib/supabase/client";
 
 interface UserValue {
   name: string;
@@ -11,8 +12,9 @@ interface UserValue {
 // Step1 define what data is meant to be shared
 interface AuthContextValue {
   user: UserValue | null;
-  login: () => void;
+  login: (email: string, password: string) => void;
   logout: () => void;
+  signUp: (email: string, password: string) => void;
 }
 
 // Step2 Create context with undefined default value forcing provider usage
@@ -37,13 +39,29 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   // We keep the user in state
   const [user, setUser] = useState<UserValue | null>(null);
   const router = useRouter();
-  const login = () => {
-    setUser({
-      name: "Jhon Doe",
-      email: "example@gmail.com",
-      id: "789456123"
+  const login = async (email: string, password: string) => {
+    // TODO enable this if you can't connect to supabase and need to design the app
+    // setUser({
+    //   name: "Jhon Doe",
+    //   email: "example@gmail.com",
+    //   id: "789456123",
+    // }
+    // )
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) {
+      throw error;
     }
-    )
+    if (data.user) {
+      console.log(`User logged in`);
+      setUser({
+        name: data.user.email!,
+        email: data.user.email!,
+        id: data.user.id,
+      })
+    }
     router.replace("/(tabs)/about");
   }
   const logout = () => {
@@ -51,11 +69,32 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
     router.replace("/(auth)/login");
   }
 
+  const signUp = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signUp(
+      {
+        email,
+        password
+      }
+    );
+    if (error) {
+      throw error;
+    }
+    if (data.user) {
+      setUser({
+        name: data.user.email!,
+        email: data.user.email!,
+        id: data.user.id,
+      })
+      router.replace("/(tabs)/prfile");
+      console.log("User" + data.user.email + "signed up");
+    }
+  }
   // The value object that all consumers will receive
   const value = {
     user,
     login,
-    logout
+    logout,
+    signUp
   };
 
   return (
