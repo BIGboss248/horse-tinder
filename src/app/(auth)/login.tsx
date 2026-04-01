@@ -141,11 +141,11 @@ export default function Login() {
           {/* Footer */}
           <View className="flex-row justify-center mt-12">
             <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-base">
-              Don't have an account?{' '}
+              Don't have an account?
             </Text>
             <TouchableOpacity onPress={() => router.replace("/(auth)/signUp")}>
               <Text className="text-amber-600 dark:text-amber-400 font-semibold text-base">
-                Sign up
+                {" "}Sign Up
               </Text>
             </TouchableOpacity>
           </View>

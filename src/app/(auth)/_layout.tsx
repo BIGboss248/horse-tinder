@@ -12,7 +12,9 @@ const signUpIcon = ({ focused, color, size }: IconProps) => <Ionicons name={focu
 
 export default function AuthLayout() {
   return (
-    <Tabs>
+    <Tabs screenOptions={{
+      headerShown: false,
+    }}>
       <Tabs.Screen name="login" options={{ tabBarIcon: loginIcon }} />
       <Tabs.Screen name="signUp" options={{ tabBarIcon: signUpIcon }} />
     </Tabs>
