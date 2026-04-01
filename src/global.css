@@ -1,2 +1,52 @@
 @import "tailwindcss";
 @import "uniwind";
+
+@layer theme {
+  :root {
+    @variant dark {
+      /* Backgrounds */
+      --color-background: #2c1f14; /* dark screen bg */
+      --color-background-secondary: #3a2a1f;
+      --color-card: #3a2a1f; /* inputs, cards, logo bg */
+
+      /* Text colors */
+      --color-foreground: #ffffff;
+      --color-foreground-secondary: #d4c3a8;
+      --color-muted: #d4c3a8; /* labels, secondary text */
+
+      /* Borders */
+      --color-border: #5c4630;
+      --color-border-subtle: #5c4630;
+
+      /* Keep your existing interactive colors or override */
+      --color-primary: #3b82f6;
+      --color-primary-hover: #2563eb;
+      --color-danger: #ef4444;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+    }
+
+    @variant light {
+      /* Backgrounds - your original light theme colors */
+      --color-background: #f5ede0;
+      --color-background-secondary: #f5ede0;
+      --color-card: #ffffff; /* inputs, logo bg in light */
+
+      /* Text colors */
+      --color-foreground: #2c1f14;
+      --color-foreground-secondary: #4a3728;
+      --color-muted: #4a3728; /* labels in light */
+
+      /* Borders */
+      --color-border: #e5d5b8;
+      --color-border-subtle: #e5d5b8;
+
+      /* Interactive colors (you can keep or customize) */
+      --color-primary: #3b82f6;
+      --color-primary-hover: #2563eb;
+      --color-danger: #ef4444;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+    }
+  }
+}
