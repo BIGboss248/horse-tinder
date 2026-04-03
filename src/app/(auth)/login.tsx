@@ -31,11 +31,21 @@ export default function Login() {
 
     setLoading(true);
     try {
-      login(email, password); // assuming login is async
+      await login(email, password); // assuming login is async
     } catch (error: any) {
       Alert.alert(
         'Login Failed',
-        error.message || 'Invalid email or password'
+        error.message || 'Invalid email or password',
+        [
+          {
+            text: 'Try Again',
+            style: 'default',
+            onPress: () => {
+              setLoading(false);
+            },
+            isPreferred: true
+          }
+        ]
       );
     } finally {
       setLoading(false);
@@ -83,7 +93,6 @@ export default function Login() {
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholderTextColor="#9C8A6F"
-
               />
             </View>
 
@@ -138,8 +147,15 @@ export default function Login() {
             </TouchableOpacity>
           </View>
 
+          {/* Social / Divider (Optional) */}
+          <View className="my-10 flex-row items-center">
+            <View className="flex-1 h-px bg-[#E5D5B8] dark:bg-[#5C4630]" />
+            <Text className="px-4 text-[#8B4513] dark:text-amber-500 text-sm">OR</Text>
+            <View className="flex-1 h-px bg-[#E5D5B8] dark:bg-[#5C4630]" />
+          </View>
+
           {/* Footer */}
-          <View className="flex-row justify-center mt-12">
+          <View className="flex-row justify-center">
             <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-base">
               Don't have an account?
             </Text>

@@ -23,7 +23,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
       return;
@@ -33,7 +33,7 @@ export default function SignIn() {
     try {
       await signUp(email, password); // Update this based on your auth function
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message || 'Invalid email or password');
+      Alert.alert("Signup Failed", error.message);
     } finally {
       setLoading(false);
     }
@@ -123,14 +123,14 @@ export default function SignIn() {
                 ? 'bg-amber-400'
                 : 'bg-[#8B4513] active:bg-[#6F370F]'
                 }`}
-              onPress={handleSignIn}
+              onPress={handleSignUp}
               disabled={loading}
             >
               {loading ? (
                 <ActivityIndicator color="#fff" size="small" />
               ) : (
                 <Text className="text-white font-semibold text-lg tracking-wider">
-                  Sign In
+                  Sign Up
                 </Text>
               )}
             </TouchableOpacity>

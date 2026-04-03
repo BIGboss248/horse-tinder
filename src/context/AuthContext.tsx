@@ -74,25 +74,41 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   }
 
   const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp(
-      {
-        email,
-        password
+    // 1. Create a promise that rejects after a certain time
+    const timeout = (ms: number) =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("TIMEOUT")), ms)
+      );
+
+    try {
+      // 2. Race the Supabase call against the timeout promise
+      // If Supabase takes > 8 seconds, the timeout "wins" and throws an error
+      const { data, error } = await Promise.race([
+        supabase.auth.signUp({ email, password }),
+        timeout(1000)
+      ]) as any;
+
+      if (error) throw error;
+
+      if (data?.user) {
+        setUser({
+          name: data.user.email!,
+          email: data.user.email!,
+          id: data.user.id,
+        });
+        router.replace("/(tabs)/profile");
+        console.log(`User ${data.user.email} signed up`);
       }
-    );
-    if (error) {
-      throw error;
+    } catch (err: any) {
+      if (err.message === "TIMEOUT") {
+        console.error("Signup timed out. Check your internet connection.");
+        throw new Error("Network connection timedout. Please check your internet connection or try again later.");
+      } else {
+        console.error("Signup error:", err.message);
+        throw err;
+      }
     }
-    if (data.user) {
-      setUser({
-        name: data.user.email!,
-        email: data.user.email!,
-        id: data.user.id,
-      })
-      router.replace("/(tabs)/prfile");
-      console.log("User" + data.user.email + "signed up");
-    }
-  }
+  };
   // The value object that all consumers will receive
   const value = {
     user,
