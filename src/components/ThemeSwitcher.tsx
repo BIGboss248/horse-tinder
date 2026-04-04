@@ -15,12 +15,12 @@ export const ThemeSwitcher = () => {
 
   // TODO Fix switch to system theme
   return (
-    <View className="p-4 gap-4">
-      <Text className="text-sm text-gray-600 dark:text-gray-300">
+    <View className="p-4 gap-4 border m-2">
+      <Text className="text-sm text-foreground-secondary">
         Current: {activeTheme}
       </Text>
 
-      <View className="flex-row gap-2">
+      <View className="flex-row gap-2 justify-around">
         {themes.map((t) => {
           const isActive = activeTheme === t.name
 
@@ -38,9 +38,10 @@ export const ThemeSwitcher = () => {
             >
               <Text className="text-2xl mb-1">{t.icon}</Text>
               <Text
-                className={`text-xs font-medium ${isActive
-                  ? 'text-white'
-                  : 'text-gray-900 dark:text-white'
+                className={`text-xs font-medium text-foreground
+                  ${isActive
+                    ? 'font-bold'
+                    : ''
                   }`}
               >
                 {t.label}
