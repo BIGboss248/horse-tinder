@@ -10,11 +10,9 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
-  Button,
 } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'expo-router';
-import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 
 export default function Login() {
   const { login } = useAuth();
@@ -70,6 +68,15 @@ export default function Login() {
             <View className="bg-white dark:bg-card w-24 h-24 rounded-3xl items-center justify-center mb-6 shadow-sm">
               <Text className="text-5xl">🐎</Text>
             </View>
+
+            <TouchableOpacity
+              onPress={() => router.replace("/onboarding/onBoarding")}
+              className="p-2 border border-border-main bg-card"
+            >
+              <Text className="text-foreground text-2xl">
+                On boarding
+              </Text>
+            </TouchableOpacity>
 
             <Text className="text-4xl text-center font-bold text-foreground tracking-tight">
               Welcome Back
