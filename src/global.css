@@ -11,11 +11,11 @@
 
       /* Text colors */
       --color-foreground: #ffffff;
-      --color-foreground-secondary: #d4c3a8;
+      --color-foreground-secondary: oklch(82.8% 0.189 84.429);
       --color-muted: #d4c3a8; /* labels, secondary text */
 
       /* Borders */
-      --color-border: #5c4630;
+      --color-border-main: #5c4630;
       --color-border-subtle: #5c4630;
 
       /* Keep your existing interactive colors or override */
@@ -33,12 +33,12 @@
       --color-card: #ffffff; /* inputs, logo bg in light */
 
       /* Text colors */
-      --color-foreground: #2c1f14;
-      --color-foreground-secondary: #4a3728;
+      --color-foreground: #2C1F14;
+      --color-foreground-secondary: #8B4513;
       --color-muted: #4a3728; /* labels in light */
 
       /* Borders */
-      --color-border: #e5d5b8;
+      --color-border-main: #e5d5b8;
       --color-border-subtle: #e5d5b8;
 
       /* Interactive colors (you can keep or customize) */

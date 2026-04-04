@@ -10,9 +10,11 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
+  Button,
 } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'expo-router';
+import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 
 export default function Login() {
   const { login } = useAuth();
@@ -53,7 +55,7 @@ export default function Login() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#F5EDE0] dark:bg-[#2C1F14]">
+    <SafeAreaView className="flex-1 bg-background">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1"
@@ -65,14 +67,14 @@ export default function Login() {
         >
           {/* Header / Branding */}
           <View className="items-center mb-12">
-            <View className="bg-white dark:bg-[#3A2A1F] w-24 h-24 rounded-3xl items-center justify-center mb-6 shadow-sm">
+            <View className="bg-white dark:bg-card w-24 h-24 rounded-3xl items-center justify-center mb-6 shadow-sm">
               <Text className="text-5xl">🐎</Text>
             </View>
 
-            <Text className="text-4xl text-center font-bold text-[#2C1F14] dark:text-white tracking-tight">
+            <Text className="text-4xl text-center font-bold text-foreground tracking-tight">
               Welcome Back
             </Text>
-            <Text className="text-[#8B4513] dark:text-amber-400 text-lg mt-2">
+            <Text className="text-foreground-secondary text-lg mt-2">
               Sign in to continue to Horse Tinder!
             </Text>
           </View>
@@ -81,11 +83,11 @@ export default function Login() {
           <View className="space-y-6">
             {/* Email Field */}
             <View>
-              <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-sm font-semibold mb-2 ml-1">
+              <Text className="text-muted text-sm font-semibold mb-2 ml-1">
                 Email
               </Text>
               <TextInput
-                className="bg-white dark:bg-[#3A2A1F] border border-[#E5D5B8] dark:border-[#5C4630] rounded-2xl px-5 py-4 text-base text-[#2C1F14] dark:text-white"
+                className="bg-card border border-border-main rounded-2xl px-5 py-4 text-base text-foreground"
                 placeholder="Enter your email"
                 value={email}
                 onChangeText={setEmail}
@@ -98,12 +100,12 @@ export default function Login() {
 
             {/* Password Field */}
             <View>
-              <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-sm font-semibold mb-2 ml-1">
+              <Text className="text-muted text-sm font-semibold mb-2 ml-1">
                 Password
               </Text>
-              <View className="bg-white dark:bg-[#3A2A1F] border border-[#E5D5B8] dark:border-[#5C4630] rounded-2xl flex-row items-center px-5">
+              <View className="bg-card border border-border-main rounded-2xl flex-row items-center px-5">
                 <TextInput
-                  className="flex-1 py-4 text-base text-[#2C1F14] dark:text-white"
+                  className="flex-1 py-4 text-base text-foreground"
                   placeholder="Enter your password"
                   value={password}
                   onChangeText={setPassword}
@@ -123,7 +125,7 @@ export default function Login() {
 
             {/* Forgot Password */}
             <TouchableOpacity className="self-end mt-1">
-              <Text className="text-amber-600 dark:text-amber-400 font-medium text-sm">
+              <Text className="text-foreground-secondary font-medium text-sm">
                 Forgot Password?
               </Text>
             </TouchableOpacity>
@@ -149,18 +151,18 @@ export default function Login() {
 
           {/* Social / Divider (Optional) */}
           <View className="my-10 flex-row items-center">
-            <View className="flex-1 h-px bg-[#E5D5B8] dark:bg-[#5C4630]" />
-            <Text className="px-4 text-[#8B4513] dark:text-amber-500 text-sm">OR</Text>
-            <View className="flex-1 h-px bg-[#E5D5B8] dark:bg-[#5C4630]" />
+            <View className="flex-1 h-px bg-border-main" />
+            <Text className="px-4 text-foreground-secondary text-sm">OR</Text>
+            <View className="flex-1 h-px bg-border-main" />
           </View>
 
           {/* Footer */}
           <View className="flex-row justify-center">
-            <Text className="text-[#4A3728] dark:text-[#D4C3A8] text-base">
+            <Text className="text-foreground text-base">
               Don't have an account?
             </Text>
             <TouchableOpacity onPress={() => router.replace("/(auth)/signUp")}>
-              <Text className="text-amber-600 dark:text-amber-400 font-semibold text-base">
+              <Text className="text-foreground-secondary font-semibold text-base">
                 {" "}Sign Up
               </Text>
             </TouchableOpacity>
@@ -168,10 +170,10 @@ export default function Login() {
 
           {/* App Branding at Bottom */}
           <View className="items-center mt-16 opacity-75">
-            <Text className="text-[#8B4513] dark:text-amber-500 font-bold text-xl tracking-widest">
+            <Text className="text-foreground-secondary font-bold text-xl tracking-widest">
               HORSE TINDER 🐎
             </Text>
-            <Text className="text-xs text-[#8B4513] dark:text-amber-600/70 mt-1">
+            <Text className="text-xs text-foreground-secondary mt-1">
               Find your perfect horse match
             </Text>
           </View>
