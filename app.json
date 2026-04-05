@@ -10,6 +10,9 @@
     "slug": "horse-tinder",
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "android": {
+      "package": "site.aminjamali.horsetinder"
+    }
   }
 }
