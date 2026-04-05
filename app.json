@@ -8,11 +8,13 @@
     },
     "name": "horse-tinder",
     "slug": "horse-tinder",
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "android": {
-      "package": "site.aminjamali.horsetinder"
+      "package": "site.aminjamali.horsetinder",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#FF69B4"
+      }
     }
   }
 }
