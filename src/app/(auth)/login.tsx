@@ -70,7 +70,7 @@ export default function Login() {
             </View>
 
             <TouchableOpacity
-              onPress={() => router.replace("/onboarding/onBoarding")}
+              onPress={() => router.push("/onboarding/onBoarding")}
               className="p-2 border border-border-main bg-card"
             >
               <Text className="text-foreground text-2xl">
