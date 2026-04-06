@@ -1,11 +1,35 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher";
 import { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 export default function OnBoarding() {
+
   const [name, setName] = useState();
   const [lastName, setLastName] = useState();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission denied",
+        "We need permission to select a profile image"
+      );
+      return;
+    }
+    const result = ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8
+    })
+    if (!(await result).canceled && (await result).assets![0]) {
+      setProfileImage((await result).assets![0].uri);
+    }
+
+  }
   return (
     <SafeAreaView>
       <View className="bg-background h-screen justify-center pr-4 pl-4">
