@@ -39,3 +39,6 @@ app-example
 android
 
 .env
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md
