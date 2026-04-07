@@ -19,7 +19,6 @@ export default function OnBoarding() {
       return;
     }
 
-    // Fix: Await the actual function call here
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"], // Note: Newer versions use ['images'], old use ImagePicker.MediaTypeOptions.Images
       allowsEditing: true,
@@ -27,7 +26,6 @@ export default function OnBoarding() {
       quality: 0.8
     });
 
-    // Fix: result is now a plain object, no need to await it again
     if (!result.canceled && result.assets && result.assets[0]) {
       setProfileImage(result.assets[0].uri);
     }
